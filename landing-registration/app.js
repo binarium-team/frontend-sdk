@@ -167,6 +167,7 @@ document.querySelectorAll('[data-landing-registration-form]').forEach(domForm =>
 
     domForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        checkErrors();
         if (form.isValid()) {
             clearServerErrors();
             const user = new User(form.email, form.password, form.currency);
@@ -183,15 +184,13 @@ document.querySelectorAll('[data-landing-registration-form]').forEach(domForm =>
 
     emailField.addEventListener('keyup', (e) => {
         form.email = e.target.value;
-        errEmailRequired.style.display = form.isExistEmail() ?  'none' : 'block';
-        errEmailFormat.style.display = form.isValidEmailFormat() ?  'none' : 'block';
+        checkErrors();
         clearServerErrors();
     })
 
     passwordField.addEventListener('keyup', (e) => {
         form.password = e.target.value;
-        errPasswordRequired.style.display = form.isExistPassword() ?  'none' : 'block';
-        errPasswordMinLength.style.display = form.isPasswordLength() ?  'none' : 'block';
+        checkErrors();
         clearServerErrors();
     })
 
@@ -203,7 +202,7 @@ document.querySelectorAll('[data-landing-registration-form]').forEach(domForm =>
 
     agreeField.addEventListener('change', (e) => {
         form.agree = e.target.checked;
-        errPasswordAgree.style.display = form.isAgree() ?  'none' : 'block';
+        checkErrors();
     });
 
     function clearServerErrors() {
@@ -219,5 +218,15 @@ document.querySelectorAll('[data-landing-registration-form]').forEach(domForm =>
             case '23bd9dbf-6b9b-41cd-a99e-4844bcf3077f':
                 errServerEmailExist.style.display = 'block';
         }
+    }
+
+    function checkErrors() {
+        errEmailRequired.style.display = form.isExistEmail() ?  'none' : 'block';
+        errEmailFormat.style.display = form.isValidEmailFormat() ?  'none' : 'block';
+        errPasswordRequired.style.display = form.isExistPassword() ?  'none' : 'block';
+        errPasswordMinLength.style.display = form.isPasswordLength() ?  'none' : 'block';
+        errPasswordAgree.style.display = form.isAgree() ?  'none' : 'block';
+
+        console.log(form.isExistEmail())
     }
 });
