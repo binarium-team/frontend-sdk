@@ -1,0 +1,236 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Landing Registration DEMO</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Helvetica, Arial, sans-serif;
+    }
+
+    .form {
+      width: 360px;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    
+    .form-errors {
+      position: absolute;
+      z-index: 1;
+      top: 100%;
+      left: -4px;
+      transform: translateY(-0.1875em);
+      background-color: #9e0b0f;
+      border-radius: 3px;
+      padding-bottom: 0.25rem;
+      padding-top: 0.25rem;
+    }
+    
+      .form-errors p {
+        display: none;
+        font-style: normal;
+        display: none;
+        padding-left: 15px;
+        padding-right: 15px;
+        font-size: 0.8125rem;
+        line-height: 1.5;
+        color: #ffffff;
+        margin: 0;
+      }
+
+    .form-input {
+      display: block;
+      border: 1px solid #a0a0a0;
+      border-radius: 3px;
+      width: 100%;
+      padding: 7px 8px;
+      font-size: 1rem;
+      line-height: 1.38;
+    }
+    
+    .form-field {
+      position: relative;
+    }
+
+    .form-field + .form-field {
+        margin-top: 20px;
+    }
+
+    .form-agreement {
+      position: relative;
+      margin-bottom: 40px;
+      font-size: 16px;
+      line-height: 1.38;
+      color: #000;
+    }
+      
+      .form-agreement label {
+        display: block;
+        position: relative;
+        padding-left: 26px;
+        text-align: left;
+      }
+
+      .form-agreement a {
+        color: #45bbf9;
+      }
+
+      .form-agreement input {
+        display: none;
+      }
+
+      .form-agreement span {
+        text-align: left;
+      }
+
+        .form-agreement span:before {
+          content: "";
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translateY(-50%);
+          width: 16px;
+          height: 16px;
+          border-radius: 2px;
+          background-color: #359be0;
+        }
+
+      .form-agreement input:checked + span:before {
+        background-image: url(data:image/svg+xml;base64,PHN2ZyBhcmlhLWhpZGRlbj0idHJ1ZSIgZGF0YS1wcmVmaXg9ImZhcyIgZGF0YS1pY29uPSJjaGVjayIgcm9sZT0iaW1nIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIiBjbGFzcz0ic3ZnLWlubGluZS0tZmEgZmEtY2hlY2sgZmEtdy0xNiBmYS05eCI+PHBhdGggZmlsbD0iI2ZmZmZmZiIgZD0iTTE3My44OTggNDM5LjQwNGwtMTY2LjQtMTY2LjRjLTkuOTk3LTkuOTk3LTkuOTk3LTI2LjIwNiAwLTM2LjIwNGwzNi4yMDMtMzYuMjA0YzkuOTk3LTkuOTk4IDI2LjIwNy05Ljk5OCAzNi4yMDQgMEwxOTIgMzEyLjY5IDQzMi4wOTUgNzIuNTk2YzkuOTk3LTkuOTk3IDI2LjIwNy05Ljk5NyAzNi4yMDQgMGwzNi4yMDMgMzYuMjA0YzkuOTk3IDkuOTk3IDkuOTk3IDI2LjIwNiAwIDM2LjIwNGwtMjk0LjQgMjk0LjQwMWMtOS45OTggOS45OTctMjYuMjA3IDkuOTk3LTM2LjIwNC0uMDAxeiIgY2xhc3M9IiI+PC9wYXRoPjwvc3ZnPg==);
+        background-size: 70% 70%;
+        background-position: 50%;
+        background-repeat: no-repeat;
+      }  
+
+    .form-currencies {
+      margin-top: 30px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+      .form-currencies__label {
+        font-size: 16px;
+        line-height: 1.38;
+        color: #000;
+        flex: 0;
+        padding-right: 10px;
+        text-align: left;
+      }
+
+      .form-currencies__items {
+        flex: 1;
+      }
+
+    .currencies {
+      display: flex;
+    }  
+      
+      .currencies label {
+        flex-grow: 1;
+      }
+      
+      .currencies input {
+        display: none;
+      }
+
+      .currencies span {
+        display: block;
+        background-color: #ebebeb;
+        font-size: 20px;
+        line-height: 55px;
+        font-weight: 600;
+        height: 50;
+        text-align: center;
+      }
+
+      .currencies input:checked + span {
+        background-color: #0ad562;
+        color: #fff;
+      }
+
+    .form-submit {
+      background: none;
+      box-shadow: none;
+      border: none;
+      outline: none;
+      letter-spacing: 1px;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 600;
+      text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+      color: #ffffff;
+      cursor: pointer;
+      background-color: #0ad562;
+      display: block;
+      width: 100%;
+      font-size: 22px;
+      line-height: 1.27;
+      padding-top: 14px;
+      padding-bottom: 14px;
+      border-radius: 41px;
+    }  
+      .form-submit:hover {
+        background-color: #45bbf9;
+      }
+  </style>
+<body>
+  <form class="form" data-landing-registration-form>
+    <div class="form-field">
+        <input class="form-input" type="text" name="email" placeholder="Эл. почта">
+        <div class="form-errors">
+          <p data-errors-email-required>Обязательное поле</p>
+          <p data-errors-email-format>Неверный емаил</p>
+          <p data-errors-server-email-format>Неверный емаил</p>
+          <p data-errors-server-email-exist>Данный емаил уже используется</p>
+        </div>
+    </div>
+    <div class="form-field">
+        <input class="form-input" type="password" name="password" placeholder="Пароль">
+        <div class="form-errors">
+          <p data-errors-password-required>Обязательное поле</p>
+          <p data-errors-password-minlength>Минимальная длина 8 символов</p>
+        </div>
+    </div>
+    <div class="form-currencies">
+        <p class="form-currencies__label">Валюта счёта</p>
+        <div class="form-currencies__items">
+            <div class="currencies">
+                <label>
+                  <input type="radio" name="currency" value="1">
+                  <span>$</span>
+                </label>
+                <label>
+                  <input type="radio" name="currency" value="2">
+                  <span>€</span>
+                </label>
+                <label>
+                  <input type="radio" name="currency" checked value="3">
+                  <span>₽</span>
+                </label>
+            </div>
+        </div>
+    </div>
+    <div class="form-agreement">
+        <label>
+            <input name="agree" type="checkbox" checked>
+            <span>Я согласен с <a href="https://binarium.com/main/client-agreement">клиентским соглашением</a></span>
+          </label>
+          <div class="form-errors">
+             <p data-errors-agree>Вы должны принять соглашение</p>
+          </div>
+    </div>
+    <button class="form-submit">Открыть счет<br>бесплатно</button>
+  </form>
+  <script src="./dist/bundle.js" async defer></script>
+</body>
+</html>
