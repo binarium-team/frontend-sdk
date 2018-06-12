@@ -7,11 +7,13 @@ const CONFIRMATION_URL = 'https://binarium.com/main/confirm-registration';
 
 class User {
     constructor(email, password, currency) {
+        const ref = this.getParamsByName('partner_id');
+        const subid = this.getParamsByName('subid');
         this.email = email;
         this.password = password;
         this.currency = currency;
         this.token = null;
-        this.refCode = this.getParamsByName('partner_id');
+        this.refCode = ref && subid ? ref + '&subid=' + subid : ref;
     }
 
     save() {
@@ -226,7 +228,5 @@ document.querySelectorAll('[data-landing-registration-form]').forEach(domForm =>
         errPasswordRequired.style.display = form.isExistPassword() ?  'none' : 'block';
         errPasswordMinLength.style.display = form.isPasswordLength() ?  'none' : 'block';
         errPasswordAgree.style.display = form.isAgree() ?  'none' : 'block';
-
-        console.log(form.isExistEmail())
     }
 });
