@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const REDIRECT_URL = 'https://binarium.com'
+const REDIRECT_URL = 'https://binarium.com';
 const BASE_URL = 'https://api.binarium.com';
 const STORAGE_URL = 'https://storage.binarium.com/api/v1/records';
 const CONFIRMATION_URL = 'https://binarium.com/main/confirm-registration';
@@ -31,6 +31,32 @@ class User {
                 })
                 .catch(error => {console.log(error); reject(error.response.data['errors'])})
         })
+    }
+
+    login() {
+        return new Promise((resolve, reject) => {
+            this.loginUser()
+                .then((response) => {
+                    this.token = response.data.token;
+                    resolve(this);
+                })
+                .catch(error => {console.log(error); reject(error.response.data['errors'])})
+        })
+    }
+
+    loginUser () {
+        const u = new FormData();
+
+        u.set('email', this.email);
+        u.set('password', this.password);
+        u.set('type', 'jwt');
+
+        return axios({
+            method: 'POST',
+            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            url: BASE_URL + '/api/v1/login',
+            data: u
+        });
     }
 
     createUser () {
@@ -149,6 +175,11 @@ class Form {
             && this.isPasswordLength() && this.isValidEmailFormat() 
             && this.isAgree();
     }
+
+    isValidLogin() {
+        return this.isExistEmail() && this.isExistPassword()
+            && this.isPasswordLength() && this.isValidEmailFormat();
+    }
 }
 
 document.querySelectorAll('[data-landing-registration-form]').forEach(domForm => {
@@ -188,13 +219,13 @@ document.querySelectorAll('[data-landing-registration-form]').forEach(domForm =>
         form.email = e.target.value;
         checkErrors();
         clearServerErrors();
-    })
+    });
 
     passwordField.addEventListener('keyup', (e) => {
         form.password = e.target.value;
         checkErrors();
         clearServerErrors();
-    })
+    });
 
     domForm.querySelectorAll('[name="currency"]').forEach((e) => {
         e.addEventListener('change', (event) => {
@@ -228,5 +259,65 @@ document.querySelectorAll('[data-landing-registration-form]').forEach(domForm =>
         errPasswordRequired.style.display = form.isExistPassword() ?  'none' : 'block';
         errPasswordMinLength.style.display = form.isPasswordLength() ?  'none' : 'block';
         errPasswordAgree.style.display = form.isAgree() ?  'none' : 'block';
+    }
+});
+
+
+document.querySelectorAll('[data-landing-login-form]').forEach(domForm => {
+    const emailField = domForm.querySelector('[name="email"]');
+    const passwordField = domForm.querySelector('[name="password"]');
+
+    const errEmailRequired = domForm.querySelector('[data-errors-email-required]');
+    const errEmailFormat = domForm.querySelector('[data-errors-email-format]');
+    const errPasswordRequired = domForm.querySelector('[data-errors-password-required]');
+    const errPasswordMinLength = domForm.querySelector('[data-errors-password-minlength]');
+
+    const errServerCredentials = domForm.querySelector('[data-errors-server-credentials]');
+
+    const form = new Form();
+
+    domForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (form.isValidLogin()) {
+            clearServerErrors();
+            const user = new User(form.email, form.password);
+            user.login()
+                .then(() => window.location.href = REDIRECT_URL + '/?auth-token=' + user.token)
+                .catch(errors => errors.forEach(err => showServerError(err.code)));
+        }
+    });
+
+    form.email = emailField.value;
+    form.password = passwordField.value;
+
+    emailField.addEventListener('keyup', (e) => {
+        form.email = e.target.value;
+        checkErrors();
+        clearServerErrors();
+    });
+
+    passwordField.addEventListener('keyup', (e) => {
+        form.password = e.target.value;
+        checkErrors();
+        clearServerErrors();
+    });
+
+    function clearServerErrors() {
+        errServerCredentials.style.display = 'none';
+    }
+
+    function checkErrors() {
+        errEmailRequired.style.display = form.isExistEmail() ?  'none' : 'block';
+        errEmailFormat.style.display = form.isValidEmailFormat() ?  'none' : 'block';
+        errPasswordRequired.style.display = form.isExistPassword() ?  'none' : 'block';
+        errPasswordMinLength.style.display = form.isPasswordLength() ?  'none' : 'block';
+    }
+
+    function showServerError(code) {
+        switch (code) {
+            case '4dba5f9c79ae34be5884e1a3c8c45e92':
+                errServerCredentials.style.display = 'block';
+                break;
+        }
     }
 });
