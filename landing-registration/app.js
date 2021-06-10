@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const REDIRECT_URL = 'https://binarium.com';
-const BASE_URL = 'https://api.binarium.com';
-const STORAGE_URL = 'https://storage.binarium.com/api/v1/records';
-const CONFIRMATION_URL = 'https://binarium.com/main/confirm-registration';
+const REDIRECT_URL = 'https://binarium.global';
+const BASE_URL = 'https://api.binarium.center';
+const STORAGE_URL = 'https://storage.binarium.center/api/v1/records';
+const CONFIRMATION_URL = 'https://binarium.center/main/confirm-registration';
 
 class User {
   constructor(email, password, currency) {
